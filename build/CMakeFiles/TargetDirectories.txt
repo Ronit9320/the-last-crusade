@@ -1,3 +1,0 @@
-/home/guardian/projects/cpp/games/space_invaders/build/CMakeFiles/space.dir
-/home/guardian/projects/cpp/games/space_invaders/build/CMakeFiles/edit_cache.dir
-/home/guardian/projects/cpp/games/space_invaders/build/CMakeFiles/rebuild_cache.dir

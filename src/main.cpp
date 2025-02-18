@@ -1,8 +1,20 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <cstddef>
+#include <cstdint>
 #include <cstdio>
 
+const size_t buffer_width = 640;
+const size_t buffer_height = 480;
+
+struct Buffer {
+  size_t width, height;
+  uint32_t *data;
+};
+
 void error_callback(int error, const char *description);
+uint32_t rgb_to_uint32(uint8_t r, uint8_t g, uint8_t b);
+void buffer_clear(Buffer *buffer, uint32_t color);
 
 int main() {
   glfwSetErrorCallback(error_callback);
@@ -37,6 +49,13 @@ int main() {
 
   printf("Using OpenGL: %d.%d\n", glVersion[0], glVersion[1]);
 
+  uint32_t clear_color = rgb_to_uint32(0, 128, 0);
+  Buffer buffer;
+  buffer.width = buffer_width;
+  buffer.height = buffer_height;
+  buffer.data = new uint32_t[buffer.width * buffer.height];
+  buffer_clear(&buffer, clear_color);
+
   glClearColor(1.0, 0.0, 0.0, 1.0);
   while (!glfwWindowShouldClose(window)) {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -51,4 +70,14 @@ int main() {
 
 void error_callback(int error, const char *description) {
   fprintf(stderr, "Error: %s\n", description);
+}
+
+uint32_t rgb_to_uint32(uint8_t r, uint8_t g, uint8_t b) {
+  return (r << 24) | (g << 16) | (b << 8) | 255;
+}
+
+void buffer_clear(Buffer *buffer, uint32_t color) {
+  for (size_t i = 0; i < buffer->width * buffer->height; ++i) {
+    buffer->data[i] = color;
+  }
 }

@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/space.dir/link.d CMakeFiles/space.dir/src/main.cpp.o -o space  /usr/lib/libGLEW.so /usr/lib/libglfw.so.3.4 /usr/lib/libGL.so
