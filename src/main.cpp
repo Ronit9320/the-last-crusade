@@ -3,6 +3,10 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 const size_t buffer_width = 640;
 const size_t buffer_height = 480;
@@ -17,6 +21,15 @@ uint32_t rgb_to_uint32(uint8_t r, uint8_t g, uint8_t b);
 void buffer_clear(Buffer *buffer, uint32_t color);
 
 int main() {
+
+  std::ifstream inFile("../shaders/basic.frag");
+  if (!inFile) {
+    std::cerr << "Couldn't open file" << std::endl;
+    return -1;
+  } else {
+    std::cout << "File opened successfully" << std::endl;
+  }
+
   glfwSetErrorCallback(error_callback);
   GLFWwindow *window;
 
