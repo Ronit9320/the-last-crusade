@@ -1,6 +1,6 @@
 #version 330 core
 
-uniform Sampler2D buffer;
+uniform sampler2D buffer;
 noperspective in vec2 TexCoord;
 
 out vec3 outColor;
