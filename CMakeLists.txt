@@ -11,39 +11,24 @@ find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
 
 # Define source files
-set(SOURCES
-    src/main.cpp
-    src/file_io/shader_utils.cpp
-)
+set(SOURCES src/main.cpp src/file_io/shader_utils.cpp)
 
 # Define header files
-set(HEADERS
-    src/file_io/shader_utils.h
-)
+set(HEADERS src/file_io/shader_utils.h)
 
 # Create executable
 add_executable(space ${SOURCES} ${HEADERS})
 
 # Include directories
-target_include_directories(space PRIVATE 
-    ${OPENGL_INCLUDE_DIR}
-    ${CMAKE_SOURCE_DIR}/src
-)
+target_include_directories(space PRIVATE ${OPENGL_INCLUDE_DIR}
+                                         ${CMAKE_SOURCE_DIR}/src)
 
 # Link libraries
-target_link_libraries(space 
-    GLEW::GLEW 
-    glfw 
-    OpenGL::GL
-)
-
-# Copy shader files to build directory
-file(COPY ${CMAKE_SOURCE_DIR}/shaders DESTINATION ${CMAKE_BINARY_DIR})
+target_link_libraries(space GLEW::GLEW glfw OpenGL::GL)
 
 # Optional: Add a custom command to copy shaders when they change
 add_custom_command(
-    TARGET space POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/shaders
-    ${CMAKE_BINARY_DIR}/shaders
-) 
+  TARGET space
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/shaders
+          ${CMAKE_BINARY_DIR}/shaders)

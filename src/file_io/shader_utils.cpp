@@ -13,7 +13,6 @@ std::string loadShaderFromFile(const std::string &filepath) {
     return "";
   }
 
-  // Read file into string using string stream
   std::stringstream buffer;
   buffer << file.rdbuf();
   return buffer.str();
@@ -37,7 +36,6 @@ GLuint compileShader(GLenum shaderType, const std::string &source) {
 
 GLuint createShaderProgram(const std::string &vertexShaderPath,
                            const std::string &fragmentShaderPath) {
-  // Load shader sources
   std::string vertexSource = loadShaderFromFile(vertexShaderPath);
   std::string fragmentSource = loadShaderFromFile(fragmentShaderPath);
 
@@ -46,7 +44,6 @@ GLuint createShaderProgram(const std::string &vertexShaderPath,
     return 0;
   }
 
-  // Compile shaders
   GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexSource);
   GLuint fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentSource);
 
@@ -58,13 +55,11 @@ GLuint createShaderProgram(const std::string &vertexShaderPath,
     return 0;
   }
 
-  // Create and link program
   GLuint program = glCreateProgram();
   glAttachShader(program, vertexShader);
   glAttachShader(program, fragmentShader);
   glLinkProgram(program);
 
-  // Check linking status
   if (!checkShaderErrors(program, GL_LINK_STATUS)) {
     std::cerr << "Shader program linking failed!" << std::endl;
     printProgramLog(program);
@@ -74,7 +69,6 @@ GLuint createShaderProgram(const std::string &vertexShaderPath,
     return 0;
   }
 
-  // Cleanup shaders
   glDetachShader(program, vertexShader);
   glDetachShader(program, fragmentShader);
   glDeleteShader(vertexShader);

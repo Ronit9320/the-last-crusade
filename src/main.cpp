@@ -1,5 +1,4 @@
 #include "../src/file_io/shader_utils.h"
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cstddef>
@@ -9,7 +8,7 @@
 #include <ostream>
 #include <string>
 
-const size_t buffer_width = 640;
+const size_t buffer_width = 720;
 const size_t buffer_height = 480;
 
 struct Buffer {
@@ -56,15 +55,12 @@ int main() {
   glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
   printf("Using OpenGL: %d.%d\n", glVersion[0], glVersion[1]);
 
-  // Create and setup texture
   GLuint texture;
   setup_texture(&texture);
 
-  // Create and setup vertex data
   GLuint vao, vbo;
   setup_quad(&vao, &vbo);
 
-  // Load and compile shaders
   std::string shaderDir = "shaders/";
   std::string vertexShaderPath = shaderDir + "basic.vert";
   std::string fragmentShaderPath = shaderDir + "basic.frag";
@@ -77,7 +73,6 @@ int main() {
     return -1;
   }
 
-  // Create and clear buffer
   uint32_t clear_color = rgb_to_uint32(0, 128, 0);
   Buffer buffer;
   buffer.width = buffer_width;
@@ -90,12 +85,10 @@ int main() {
   while (!glfwWindowShouldClose(window)) {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Update texture with buffer data
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, buffer.width, buffer.height,
                     GL_RGBA, GL_UNSIGNED_BYTE, buffer.data);
 
-    // Render quad with texture
     glUseProgram(shaderProgram);
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6); // 6 vertices for 2 triangles
@@ -104,7 +97,6 @@ int main() {
     glfwPollEvents();
   }
 
-  // Cleanup
   delete[] buffer.data;
   glDeleteProgram(shaderProgram);
   glDeleteVertexArrays(1, &vao);
@@ -120,11 +112,9 @@ void setup_texture(GLuint *texture) {
   glGenTextures(1, texture);
   glBindTexture(GL_TEXTURE_2D, *texture);
 
-  // Initialize empty texture
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, buffer_width, buffer_height, 0,
                GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
-  // Set texture parameters
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -132,16 +122,9 @@ void setup_texture(GLuint *texture) {
 }
 
 void setup_quad(GLuint *vao, GLuint *vbo) {
-  // Vertex data for a fullscreen quad (2 triangles)
-  float vertices[] = {
-      // positions   // texture coords
-      -1.0f, -1.0f, 0.0f, 0.0f, // bottom left
-      1.0f,  -1.0f, 1.0f, 0.0f, // bottom right
-      1.0f,  1.0f,  1.0f, 1.0f, // top right
-      -1.0f, -1.0f, 0.0f, 0.0f, // bottom left
-      1.0f,  1.0f,  1.0f, 1.0f, // top right
-      -1.0f, 1.0f,  0.0f, 1.0f  // top left
-  };
+  float vertices[] = {-1.0f, -1.0f, 0.0f, 0.0f, 1.0f,  -1.0f, 1.0f, 0.0f,
+                      1.0f,  1.0f,  1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
+                      1.0f,  1.0f,  1.0f, 1.0f, -1.0f, 1.0f,  0.0f, 1.0f};
 
   glGenVertexArrays(1, vao);
   glGenBuffers(1, vbo);
@@ -151,11 +134,9 @@ void setup_quad(GLuint *vao, GLuint *vbo) {
   glBindBuffer(GL_ARRAY_BUFFER, *vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  // Position attribute
   glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
   glEnableVertexAttribArray(0);
 
-  // Texture coord attribute
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
                         (void *)(2 * sizeof(float)));
   glEnableVertexAttribArray(1);
