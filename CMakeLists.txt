@@ -8,11 +8,11 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
 
-set(SOURCES src/main.cpp)
+set(SOURCES src/main.cpp src/GLUtils/window.cpp)
 
-# set(HEADERS --)
+set(HEADERS src/GLUtils/window.h)
 
-add_executable(space ${SOURCES})
+add_executable(space ${SOURCES} ${HEADERS})
 
 target_include_directories(space PRIVATE ${OPENGL_INCLUDE_DIR} ${CMAKE_SRC_DIR}/src)
 
