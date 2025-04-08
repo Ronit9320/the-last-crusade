@@ -1,8 +1,22 @@
-#include "../include/file_io.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
-void generateShaders() {
-  readFromFile("../shaders/shader.frag");
-  readFromFile("../shaders/shader.vert");
+void generateShaders(GLchar *vertexShaderSource, GLchar *fragmentShaderSource) {
+
+  unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(vertexShader, 1, vertexShaderSource, NULL);
+  glCompileShader(vertexShader);
+
+  unsigned int fragmentShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(fragmentShader, 1, fragmentShaderSource, NULL);
+  glCompileShader(fragmentShader);
+
+  unsigned int shaderProgram = glCreateProgram();
+  glAttachShader(shaderProgram, vertexShader);
+  glAttachShader(shaderProgram, fragmentShader);
+  glLinkProgram(shaderProgram);
+
+  glDeleteShader(vertexShader);
+  glDeleteShader(fragmentShader);
 }

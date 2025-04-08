@@ -5,6 +5,5 @@
 int main() {
   std::cout << "starting window creation" << std::endl;
   createWindow();
-  generateShaders();
   return 0;
 }
