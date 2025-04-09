@@ -25,6 +25,7 @@ void createWindow() {
 
   std::vector<float> vertices = getData();
 
+  unsigned int shaderProgram;
   shaderUtils::generateShaders(vertex, fragment);
   shaderUtils::attributeHandler(vertices.data(), vertices.size());
 
@@ -32,6 +33,7 @@ void createWindow() {
     glClearColor(0.2f, 0.0f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glUseProgram(shaderProgram);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     glfwSwapBuffers(window);
