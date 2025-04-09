@@ -1,4 +1,5 @@
 #include "../include/data.h"
+#include "../include/errorHandler.h"
 #include "../include/file_io.h"
 #include "../include/shaders.h"
 #include <GL/glew.h>
@@ -24,6 +25,7 @@ bool createWindow() {
 
   glfwMakeContextCurrent(window);
   glewInit();
+  checkErrors();
   if (!glewInit()) {
     std::cout << "GLEW initialization failed" << std::endl;
   }
