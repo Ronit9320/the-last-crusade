@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+namespace shaderUtils {
+
 void generateShaders(const char *vertexShaderSource,
                      const char *fragmentShaderSource) {
 
@@ -21,3 +23,22 @@ void generateShaders(const char *vertexShaderSource,
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 }
+
+void attributeHandler(float *vertices, size_t vertex_count) {
+
+  unsigned int VAO, VBO;
+  glGenVertexArrays(1, &VAO);
+  glGenBuffers(1, &VBO);
+
+  glBindVertexArray(VAO);
+
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+  glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(vertices), vertices,
+               GL_STATIC_DRAW);
+
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  glEnableVertexAttribArray(0);
+}
+
+} // namespace shaderUtils

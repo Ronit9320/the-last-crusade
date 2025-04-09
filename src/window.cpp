@@ -1,8 +1,10 @@
+#include "../include/data.h"
 #include "../include/file_io.h"
 #include "../include/shaders.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <vector>
 
 void createWindow() {
   glfwInit();
@@ -16,14 +18,22 @@ void createWindow() {
   std::string vertexShader = readFromFile("../shaders/shader.vert");
   std::string fragmentShader = readFromFile("../shaders/shader.frag");
 
-  const GLchar *vertex = vertexShader.c_str();
-  const GLchar *fragment = fragmentShader.c_str();
+  std::cout << fragmentShader << std::endl;
 
-  generateShaders(vertex, fragment);
+  const char *vertex = vertexShader.c_str();
+  const char *fragment = fragmentShader.c_str();
+
+  std::vector<float> vertices = getData();
+
+  shaderUtils::generateShaders(vertex, fragment);
+  shaderUtils::attributeHandler(vertices.data(), vertices.size());
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(0.2f, 0.0f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
