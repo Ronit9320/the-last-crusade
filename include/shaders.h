@@ -4,8 +4,8 @@
 #include <iostream>
 
 namespace shaderUtils {
-void generateShaders(const char *vertexShaderSource,
-                     const char *fragmentShaderSource);
+unsigned int generateShaders(const char *vertexShaderSource,
+                             const char *fragmentShaderSource);
 
 void attributeHandler(float *vertices, size_t vertex_count);
 } // namespace shaderUtils

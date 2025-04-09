@@ -18,15 +18,12 @@ void createWindow() {
   std::string vertexShader = readFromFile("../shaders/shader.vert");
   std::string fragmentShader = readFromFile("../shaders/shader.frag");
 
-  std::cout << fragmentShader << std::endl;
-
   const char *vertex = vertexShader.c_str();
   const char *fragment = fragmentShader.c_str();
 
   std::vector<float> vertices = getData();
 
-  unsigned int shaderProgram;
-  shaderUtils::generateShaders(vertex, fragment);
+  unsigned int shaderProgram = shaderUtils::generateShaders(vertex, fragment);
   shaderUtils::attributeHandler(vertices.data(), vertices.size());
 
   while (!glfwWindowShouldClose(window)) {
