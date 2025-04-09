@@ -10,15 +10,32 @@ unsigned int generateShaders(const char *vertexShaderSource,
   unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
   glCompileShader(vertexShader);
+  int success;
+  char infoLog[512];
+  glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+  if (!success) {
+    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+    std::cout << "ERROR::VERTEX_SHADER_COMPILATION\n" << infoLog << std::endl;
+  }
 
   unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
   glCompileShader(fragmentShader);
+  glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+  if (!success) {
+    glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+    std::cout << "ERROR::FRAGMENT_SHADER_COMPILATION\n" << infoLog << std::endl;
+  }
 
   unsigned int shaderProgram = glCreateProgram();
   glAttachShader(shaderProgram, vertexShader);
   glAttachShader(shaderProgram, fragmentShader);
   glLinkProgram(shaderProgram);
+  glGetShaderiv(shaderProgram, GL_LINK_STATUS, &success);
+  if (!success) {
+    glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
+    std::cout << "ERROR::SHADER_LINKING\n" << infoLog << std::endl;
+  }
 
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);

@@ -6,15 +6,27 @@
 #include <iostream>
 #include <vector>
 
-void createWindow() {
+bool createWindow() {
   glfwInit();
+  if (!glfwInit()) {
+    std::cout << "GLFW initialization failed" << std::endl;
+    return false;
+  }
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   GLFWwindow *window = glfwCreateWindow(800, 600, "START", NULL, NULL);
+  if (window == nullptr) {
+    std::cout << "window creation failed" << std::endl;
+    return false;
+  }
+
   glfwMakeContextCurrent(window);
   glewInit();
+  if (!glewInit()) {
+    std::cout << "GLEW initialization failed" << std::endl;
+  }
   std::string vertexShader = readFromFile("../shaders/shader.vert");
   std::string fragmentShader = readFromFile("../shaders/shader.frag");
 
@@ -37,4 +49,5 @@ void createWindow() {
     glfwPollEvents();
   }
   glfwTerminate();
+  return true;
 }
