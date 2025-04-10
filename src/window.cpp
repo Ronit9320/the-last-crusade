@@ -17,7 +17,8 @@ bool createWindow() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  GLFWwindow *window = glfwCreateWindow(800, 600, "START", NULL, NULL);
+  GLFWwindow *window =
+      glfwCreateWindow(800, 600, "THE LAST CRUSADE", NULL, NULL);
   if (window == nullptr) {
     std::cout << "window creation failed" << std::endl;
     return false;
@@ -26,8 +27,9 @@ bool createWindow() {
   glfwMakeContextCurrent(window);
   glewInit();
   checkErrors();
-  if (!glewInit()) {
+  if (glewInit() != 0) {
     std::cout << "GLEW initialization failed" << std::endl;
+    return -1;
   }
   std::string vertexShader = readFromFile("../shaders/shader.vert");
   std::string fragmentShader = readFromFile("../shaders/shader.frag");
@@ -42,7 +44,8 @@ bool createWindow() {
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(0.2f, 0.0f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR);
+    checkErrors();
 
     glUseProgram(shaderProgram);
     glDrawArrays(GL_TRIANGLES, 0, 3);
