@@ -1,4 +1,3 @@
-#include "../include/shaders.h"
 #include "../include/window.h"
 #include <iostream>
 
