@@ -29,7 +29,7 @@ bool createWindow() {
   checkErrors();
   if (glewInit() != 0) {
     std::cout << "GLEW initialization failed" << std::endl;
-    return -1;
+    return false;
   }
   std::string vertexShader = readFromFile("../shaders/shader.vert");
   std::string fragmentShader = readFromFile("../shaders/shader.frag");
