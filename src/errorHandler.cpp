@@ -7,8 +7,10 @@ int checkErrors() {
     switch (error) {
     case GL_INVALID_ENUM:
       std::cout << "ERROR: Invalid enum" << std::endl;
+      break;
     case GL_INVALID_VALUE:
       std::cout << "ERROR: Invalid value" << std::endl;
+      break;
     default:
       std::cout << "ERROR: Unkown error" << std::endl;
       break;

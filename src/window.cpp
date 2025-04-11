@@ -37,13 +37,13 @@ bool createWindow(int width, int height) {
   const char *vertex = vertexShader.c_str();
   const char *fragment = fragmentShader.c_str();
 
-  std::vector<float> vertices = getData();
+  std::vector<float> vertices = getVertices();
+  std::vector<uint8_t> indices = getIndices();
 
   unsigned int shaderProgram = GLUtils::generateShaders(vertex, fragment);
-  GLUtils::attributeHandler(vertices.data(), vertices.size());
+  GLUtils::genBuffers(vertices.data(), indices.data());
 
-  unsigned int texture;
-  GLUtils::loadTextures(texture);
+  unsigned int texture = GLUtils::loadTextures();
   checkErrors();
 
   while (!glfwWindowShouldClose(window)) {
