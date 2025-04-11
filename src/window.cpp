@@ -1,13 +1,13 @@
+#include "../include/GLUtils.h"
 #include "../include/data.h"
 #include "../include/errorHandler.h"
 #include "../include/file_io.h"
-#include "../include/shaders.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <vector>
 
-bool createWindow() {
+bool createWindow(int width, int height) {
   glfwInit();
   if (!glfwInit()) {
     std::cout << "GLFW initialization failed" << std::endl;
@@ -18,7 +18,7 @@ bool createWindow() {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   GLFWwindow *window =
-      glfwCreateWindow(800, 600, "THE LAST CRUSADE", NULL, NULL);
+      glfwCreateWindow(width, height, "THE LAST CRUSADE", NULL, NULL);
   if (window == nullptr) {
     std::cout << "window creation failed" << std::endl;
     return false;
@@ -39,16 +39,23 @@ bool createWindow() {
 
   std::vector<float> vertices = getData();
 
-  unsigned int shaderProgram = shaderUtils::generateShaders(vertex, fragment);
-  shaderUtils::attributeHandler(vertices.data(), vertices.size());
+  unsigned int shaderProgram = GLUtils::generateShaders(vertex, fragment);
+  GLUtils::attributeHandler(vertices.data(), vertices.size());
+
+  unsigned int texture;
+  GLUtils::loadTextures(texture);
+  checkErrors();
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(0.2f, 0.0f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     checkErrors();
 
+    glBindTexture(GL_TEXTURE_2D, texture);
+    checkErrors();
+
     glUseProgram(shaderProgram);
-    glDrawArrays(GL_TRIANGLES, 0, 4);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
