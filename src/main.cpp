@@ -3,6 +3,8 @@
 
 int main() {
   std::cout << "starting window creation" << std::endl;
-  createWindow(800, 600);
+  int width = 800;
+  int height = 600;
+  createWindow(width, height);
   return 0;
 }
