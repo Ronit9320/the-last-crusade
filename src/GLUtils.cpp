@@ -46,7 +46,7 @@ unsigned int generateShaders(const char *vertexShaderSource,
   return shaderProgram;
 }
 
-void genBuffers(float *vertices, unsigned int *indices) {
+unsigned int genBuffers(float *vertices, unsigned int *indices) {
 
   unsigned int VAO, VBO, EBO;
   glGenVertexArrays(1, &VAO);
@@ -72,6 +72,8 @@ void genBuffers(float *vertices, unsigned int *indices) {
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
                         (void *)(6 * sizeof(float)));
   glEnableVertexAttribArray(2);
+
+  return VAO;
 }
 
 unsigned int loadTextures() {

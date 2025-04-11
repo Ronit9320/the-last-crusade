@@ -8,7 +8,6 @@
 #include <vector>
 
 bool createWindow(int width, int height) {
-  glfwInit();
   if (!glfwInit()) {
     std::cout << "GLFW initialization failed" << std::endl;
     return false;
@@ -40,7 +39,7 @@ bool createWindow(int width, int height) {
   std::vector<unsigned int> indices = getIndices();
 
   unsigned int shaderProgram = GLUtils::generateShaders(vertex, fragment);
-  GLUtils::genBuffers(vertices.data(), indices.data());
+  unsigned int VAO = GLUtils::genBuffers(vertices.data(), indices.data());
 
   unsigned int texture = GLUtils::loadTextures();
   checkErrors();
@@ -53,6 +52,7 @@ bool createWindow(int width, int height) {
     glBindTexture(GL_TEXTURE_2D, texture);
     checkErrors();
 
+    glBindVertexArray(VAO);
     glUseProgram(shaderProgram);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
