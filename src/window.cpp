@@ -25,7 +25,6 @@ bool createWindow(int width, int height) {
   }
 
   glfwMakeContextCurrent(window);
-  glewInit();
   checkErrors();
   if (glewInit() != 0) {
     std::cout << "GLEW initialization failed" << std::endl;
@@ -38,7 +37,7 @@ bool createWindow(int width, int height) {
   const char *fragment = fragmentShader.c_str();
 
   std::vector<float> vertices = getVertices();
-  std::vector<uint8_t> indices = getIndices();
+  std::vector<unsigned int> indices = getIndices();
 
   unsigned int shaderProgram = GLUtils::generateShaders(vertex, fragment);
   GLUtils::genBuffers(vertices.data(), indices.data());

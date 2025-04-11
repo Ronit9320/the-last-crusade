@@ -46,7 +46,7 @@ unsigned int generateShaders(const char *vertexShaderSource,
   return shaderProgram;
 }
 
-void genBuffers(float *vertices, uint8_t *indices) {
+void genBuffers(float *vertices, unsigned int *indices) {
 
   unsigned int VAO, VBO, EBO;
   glGenVertexArrays(1, &VAO);

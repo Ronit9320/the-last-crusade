@@ -7,7 +7,7 @@ namespace GLUtils {
 unsigned int generateShaders(const char *vertexShaderSource,
                              const char *fragmentShaderSource);
 
-void genBuffers(float *vertices, uint8_t *indices);
+void genBuffers(float *vertices, unsigned int *indices);
 unsigned int loadTextures();
 } // namespace GLUtils
 #endif // !SHADERS_H
