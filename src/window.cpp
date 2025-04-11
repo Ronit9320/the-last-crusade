@@ -39,7 +39,8 @@ bool createWindow(int width, int height) {
   std::vector<unsigned int> indices = getIndices();
 
   unsigned int shaderProgram = GLUtils::generateShaders(vertex, fragment);
-  unsigned int VAO = GLUtils::genBuffers(vertices.data(), indices.data());
+  unsigned int VAO = GLUtils::genBuffers(vertices.data(), indices.data(),
+                                         vertices.size(), indices.size());
 
   unsigned int texture = GLUtils::loadTextures();
   checkErrors();

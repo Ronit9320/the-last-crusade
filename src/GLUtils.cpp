@@ -46,7 +46,8 @@ unsigned int generateShaders(const char *vertexShaderSource,
   return shaderProgram;
 }
 
-unsigned int genBuffers(float *vertices, unsigned int *indices) {
+unsigned int genBuffers(float *vertices, unsigned int *indices, size_t vertSize,
+                        size_t indSize) {
 
   unsigned int VAO, VBO, EBO;
   glGenVertexArrays(1, &VAO);
@@ -58,8 +59,9 @@ unsigned int genBuffers(float *vertices, unsigned int *indices) {
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
+  glBufferData(GL_ARRAY_BUFFER, vertSize * sizeof(float), vertices,
+               GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indSize * sizeof(unsigned int), indices,
                GL_STATIC_DRAW);
 
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
