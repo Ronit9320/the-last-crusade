@@ -1,5 +1,3 @@
-#include "../include/errorHandler.h"
-#include "../include/file_io.h"
 #include "../include/stb_image.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
