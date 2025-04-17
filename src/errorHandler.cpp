@@ -11,6 +11,9 @@ int checkErrors() {
     case GL_INVALID_VALUE:
       std::cout << "ERROR: Invalid value" << std::endl;
       break;
+    case 1:
+      std::cout << "NO ERRORS" << std::endl;
+      break;
     default:
       std::cout << "ERROR: Unkown error" << std::endl;
       break;

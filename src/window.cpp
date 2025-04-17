@@ -24,7 +24,7 @@ bool createWindow(int width, int height) {
   }
 
   glfwMakeContextCurrent(window);
-  checkErrors();
+  // checkErrors();
   if (glewInit() != 0) {
     std::cout << "GLEW initialization failed" << std::endl;
     return false;
@@ -43,15 +43,16 @@ bool createWindow(int width, int height) {
                                          vertices.size(), indices.size());
 
   unsigned int texture = GLUtils::loadTextures();
-  checkErrors();
+  // checkErrors();
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(0.2f, 0.0f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    checkErrors();
+    // checkErrors();
 
     glBindTexture(GL_TEXTURE_2D, texture);
-    checkErrors();
+    // GLuint error = checkErrors();
+    // std::cout << error << std::endl;
 
     glBindVertexArray(VAO);
     glUseProgram(shaderProgram);

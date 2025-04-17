@@ -97,7 +97,7 @@ unsigned int loadTextures() {
                  GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
   } else {
-    std::cout << "Failed to load texture" << std::endl;
+    std::cout << "ERROR: Failed to load texture" << std::endl;
   }
   stbi_image_free(data);
 
