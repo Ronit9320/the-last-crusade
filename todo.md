@@ -1,2 +1,5 @@
-make a asset, get it into the window, make it smaller.
-make it ineractive via the keyboard -- WASD
+SDL window gen - with OpenGL
+character movement
+asset integration
+world gen - procedural
+
