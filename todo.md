@@ -1,5 +1,3 @@
-SDL window gen - with OpenGL
-character movement
-asset integration
-world gen - procedural
-
+procedurally generated space world
+noise maps
+assets in space -- planets, rocks, asteroids
